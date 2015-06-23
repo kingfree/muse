@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2688B45D1B39251900CFC07E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688B45C1B39251900CFC07E /* AppDelegate.swift */; };
-		2688B45F1B39251900CFC07E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688B45E1B39251900CFC07E /* ViewController.swift */; };
-		2688B4611B39251900CFC07E /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688B4601B39251900CFC07E /* Document.swift */; };
+		264E8DED1B3978F4001DCA3C /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264E8DEC1B3978F4001DCA3C /* Music.swift */; };
+		264E8DF71B397AE2001DCA3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264E8DF61B397AE2001DCA3C /* AppDelegate.swift */; };
+		264E8DF91B397FAB001DCA3C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264E8DF81B397FAB001DCA3C /* ViewController.swift */; };
 		2688B4631B39251900CFC07E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2688B4621B39251900CFC07E /* Images.xcassets */; };
 		2688B4661B39251900CFC07E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2688B4641B39251900CFC07E /* Main.storyboard */; };
 		2688B4721B39251900CFC07E /* museTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688B4711B39251900CFC07E /* museTests.swift */; };
@@ -26,11 +26,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		264E8DEC1B3978F4001DCA3C /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Music.swift; path = muse/Music.swift; sourceTree = "<group>"; };
+		264E8DF61B397AE2001DCA3C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = muse/AppDelegate.swift; sourceTree = "<group>"; };
+		264E8DF81B397FAB001DCA3C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = muse/ViewController.swift; sourceTree = "<group>"; };
 		2688B4571B39251800CFC07E /* muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2688B45B1B39251900CFC07E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2688B45C1B39251900CFC07E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2688B45E1B39251900CFC07E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2688B4601B39251900CFC07E /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		2688B4621B39251900CFC07E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2688B4651B39251900CFC07E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2688B46B1B39251900CFC07E /* museTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = museTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +59,9 @@
 		2688B44E1B39251800CFC07E = {
 			isa = PBXGroup;
 			children = (
+				264E8DF61B397AE2001DCA3C /* AppDelegate.swift */,
+				264E8DF81B397FAB001DCA3C /* ViewController.swift */,
+				264E8DEC1B3978F4001DCA3C /* Music.swift */,
 				2688B4591B39251800CFC07E /* muse */,
 				2688B46E1B39251900CFC07E /* museTests */,
 				2688B4581B39251800CFC07E /* Products */,
@@ -77,9 +80,6 @@
 		2688B4591B39251800CFC07E /* muse */ = {
 			isa = PBXGroup;
 			children = (
-				2688B45C1B39251900CFC07E /* AppDelegate.swift */,
-				2688B45E1B39251900CFC07E /* ViewController.swift */,
-				2688B4601B39251900CFC07E /* Document.swift */,
 				2688B4621B39251900CFC07E /* Images.xcassets */,
 				2688B4641B39251900CFC07E /* Main.storyboard */,
 				2688B45A1B39251900CFC07E /* Supporting Files */,
@@ -211,9 +211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2688B45F1B39251900CFC07E /* ViewController.swift in Sources */,
-				2688B45D1B39251900CFC07E /* AppDelegate.swift in Sources */,
-				2688B4611B39251900CFC07E /* Document.swift in Sources */,
+				264E8DF91B397FAB001DCA3C /* ViewController.swift in Sources */,
+				264E8DF71B397AE2001DCA3C /* AppDelegate.swift in Sources */,
+				264E8DED1B3978F4001DCA3C /* Music.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,10 +331,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -342,6 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
