@@ -404,6 +404,7 @@
 				2688B4771B39251900CFC07E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2688B4781B39251900CFC07E /* Build configuration list for PBXNativeTarget "museTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +413,7 @@
 				2688B47A1B39251900CFC07E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
