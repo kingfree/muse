@@ -10,6 +10,7 @@
 		264E8DED1B3978F4001DCA3C /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264E8DEC1B3978F4001DCA3C /* Music.swift */; };
 		264E8DF71B397AE2001DCA3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264E8DF61B397AE2001DCA3C /* AppDelegate.swift */; };
 		264E8DF91B397FAB001DCA3C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264E8DF81B397FAB001DCA3C /* ViewController.swift */; };
+		2666BEA61B3AC7420056E402 /* PlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2666BEA51B3AC7420056E402 /* PlayList.swift */; };
 		2688B4631B39251900CFC07E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2688B4621B39251900CFC07E /* Images.xcassets */; };
 		2688B4661B39251900CFC07E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2688B4641B39251900CFC07E /* Main.storyboard */; };
 		2688B4721B39251900CFC07E /* museTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2688B4711B39251900CFC07E /* museTests.swift */; };
@@ -28,7 +29,8 @@
 /* Begin PBXFileReference section */
 		264E8DEC1B3978F4001DCA3C /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Music.swift; path = muse/Music.swift; sourceTree = "<group>"; };
 		264E8DF61B397AE2001DCA3C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = muse/AppDelegate.swift; sourceTree = "<group>"; };
-		264E8DF81B397FAB001DCA3C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = muse/ViewController.swift; sourceTree = "<group>"; };
+		264E8DF81B397FAB001DCA3C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2666BEA51B3AC7420056E402 /* PlayList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayList.swift; path = muse/PlayList.swift; sourceTree = "<group>"; };
 		2688B4571B39251800CFC07E /* muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2688B45B1B39251900CFC07E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2688B4621B39251900CFC07E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -60,8 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				264E8DF61B397AE2001DCA3C /* AppDelegate.swift */,
-				264E8DF81B397FAB001DCA3C /* ViewController.swift */,
 				264E8DEC1B3978F4001DCA3C /* Music.swift */,
+				2666BEA51B3AC7420056E402 /* PlayList.swift */,
 				2688B4591B39251800CFC07E /* muse */,
 				2688B46E1B39251900CFC07E /* museTests */,
 				2688B4581B39251800CFC07E /* Products */,
@@ -82,6 +84,7 @@
 			children = (
 				2688B4621B39251900CFC07E /* Images.xcassets */,
 				2688B4641B39251900CFC07E /* Main.storyboard */,
+				264E8DF81B397FAB001DCA3C /* ViewController.swift */,
 				2688B45A1B39251900CFC07E /* Supporting Files */,
 			);
 			path = muse;
@@ -211,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2666BEA61B3AC7420056E402 /* PlayList.swift in Sources */,
 				264E8DF91B397FAB001DCA3C /* ViewController.swift in Sources */,
 				264E8DF71B397AE2001DCA3C /* AppDelegate.swift in Sources */,
 				264E8DED1B3978F4001DCA3C /* Music.swift in Sources */,
