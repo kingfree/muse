@@ -13,6 +13,8 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var tagTableView: NSTableView!
     
+    @IBOutlet weak var playlistTableView: NSTableView!
+    
     override func viewWillAppear() {
         
     }
@@ -31,7 +33,7 @@ class ViewController: NSViewController {
     @IBAction func openFile(sender: AnyObject) {
         
         var openDialog: NSOpenPanel = NSOpenPanel()
-        var fileTypeArray: [String] = "mp3".componentsSeparatedByString(",")
+        var fileTypeArray: [String] = "mp3,ape,flac".componentsSeparatedByString(",")
         
         openDialog.prompt = "Open"
         openDialog.worksWhenModal = true
@@ -47,36 +49,67 @@ class ViewController: NSViewController {
             
             let pl = PlayList.sharedInstance
             pl.setNowPlaying(path!)
-            println(pl.nowplaying.metadata())
-            self.tagTableView.reloadData()
+            tagTableView.reloadData()
+            playlistTableView.reloadData()
         }
         
     }
     
-    func numberOfRowsInTableView(aTableView: NSTableView) -> Int
+    func numberOfRowsInTableView(tableView: NSTableView) -> Int
     {
         let pl = PlayList.sharedInstance
-        if let music = pl.nowplaying {
-            return music.metadata().count
+        if tableView == tagTableView {
+            if let music = pl.nowplaying {
+                return music.metadataArray.count
+            }
+        } else if tableView == playlistTableView {
+            return pl.playinglist.count
         }
         return 0
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+    func tableView(tableView: NSTableView!, viewForTableColumn tableColumn: NSTableColumn!, row: Int) -> NSView! {
+        println(tableView)
+        let cell = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as! NSTableCellView
+        let textField = cell.textField
         let pl = PlayList.sharedInstance
-        if let music = pl.nowplaying {
-            let item: [String: String] = (music.metadata())[row]
-            println(item)
-            println(tableColumn)
-            if let col: String = tableColumn!.identifier {
-                println(col)
-                if col == "标签" {
-                    return item["标签"]!
-                } else if col == "值" {
-                    return item["值"]!
+        if tableView == tagTableView {
+            if let music = pl.nowplaying {
+                let item: (key: String, value: String) = music.metadataArray[row]
+                if let col: String = tableColumn!.identifier {
+                    if col == "key" {
+                        textField?.stringValue = item.key
+                    } else if col == "value" {
+                        textField?.stringValue = item.value
+                    }
+                }
+            }
+        } else if tableView == playlistTableView {
+            println(pl.playinglist.count)
+            println(row)
+            if pl.playinglist.count >= row {
+                let music = pl.playinglist[row]
+                if let col: String = tableColumn!.identifier {
+                    switch col {
+                    case "title":
+                        textField?.stringValue = music.title
+                    case "artist":
+                        textField?.stringValue = music.artist
+                    case "album":
+                        textField?.stringValue = music.album
+                    case "track":
+                        textField?.stringValue = music.track
+                    case "duration":
+                        let durationText = NSString(format: "%i:%02i",
+                            music.duration.value / 60,
+                            music.duration.value % 60)
+                        textField?.stringValue = durationText as String
+                    default:
+                        break
+                    }
                 }
             }
         }
-        return "none"
+        return cell
     }
 }

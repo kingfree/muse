@@ -11,21 +11,43 @@ import AVFoundation
 
 class Music: NSObject {
     var audio: AVURLAsset
+    var title: String = ""
+    var artist: String = ""
+    var album: String = ""
+    var track: String = ""
+    var duration: CMTime
     
     init(path: NSURL) {
         audio = AVURLAsset(URL: path, options: nil)
+        duration = audio.duration
+        super.init()
+        setProps()
     }
     
-    func metadata() -> [[String: String]] {
-        var meta: [[String: String]] = []
-        var metadata = self.audio.metadata as! [AVMetadataItem]
-        for item in metadata {
-            let key = transforidentifier(item.identifier)
-            if let value = item.stringValue {
-                meta.append(["标签": key, "值": value])
-            }
+    func setProps() {
+        title = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyTitle, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
+//        artist = getprop("标题").stringValue
+//        album = getprop("标题").stringValue
+//        track = getprop("标题").stringValue
+    }
+    
+    var metadata: [AVMetadataItem] {
+        get {
+            return self.audio.metadata as! [AVMetadataItem]
         }
-        return meta
+    }
+    
+    var metadataArray: [(key: String, value: String)] {
+        get {
+            var meta: [(key: String, value: String)] = []
+            for item in metadata {
+                let key = transforidentifier(item.identifier)
+                if let value = item.stringValue {
+                    meta.append((key: key, value: value))
+                }
+            }
+            return meta
+        }
     }
     
     let id3frames: [String: String] = [

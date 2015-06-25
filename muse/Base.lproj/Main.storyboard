@@ -338,14 +338,14 @@
                                                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" id="Wil-cx-Zgg">
+                                                                        <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="NoY-ie-Qcp" viewBased="YES" id="Wil-cx-Zgg">
                                                                             <rect key="frame" x="0.0" y="0.0" width="186" height="0.0"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                             <tableColumns>
-                                                                                <tableColumn width="116" minWidth="40" maxWidth="1000" id="uSv-Jn-67e">
+                                                                                <tableColumn identifier="key" width="60" minWidth="40" maxWidth="1000" id="uSv-Jn-67e">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="标签">
                                                                                         <font key="font" metaFont="smallSystem"/>
                                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -357,8 +357,27 @@
                                                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                                    <prototypeCellViews>
+                                                                                        <tableCellView id="Wjk-N4-KPk">
+                                                                                            <rect key="frame" x="1" y="1" width="60" height="17"/>
+                                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                            <subviews>
+                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JlL-T3-hv7">
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="B9U-yf-prD">
+                                                                                                        <font key="font" metaFont="system"/>
+                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </textFieldCell>
+                                                                                                </textField>
+                                                                                            </subviews>
+                                                                                            <connections>
+                                                                                                <outlet property="textField" destination="JlL-T3-hv7" id="BQA-As-JeG"/>
+                                                                                            </connections>
+                                                                                        </tableCellView>
+                                                                                    </prototypeCellViews>
                                                                                 </tableColumn>
-                                                                                <tableColumn width="64" minWidth="40" maxWidth="1000" id="YRT-nM-mlR">
+                                                                                <tableColumn identifier="value" width="120" minWidth="40" maxWidth="1000" id="YRT-nM-mlR">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="值">
                                                                                         <font key="font" metaFont="smallSystem"/>
                                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -370,6 +389,25 @@
                                                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                                    <prototypeCellViews>
+                                                                                        <tableCellView id="GSm-yc-TXD">
+                                                                                            <rect key="frame" x="64" y="1" width="120" height="17"/>
+                                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                            <subviews>
+                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOe-fj-8e9">
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="jrd-Pg-UBP">
+                                                                                                        <font key="font" metaFont="system"/>
+                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </textFieldCell>
+                                                                                                </textField>
+                                                                                            </subviews>
+                                                                                            <connections>
+                                                                                                <outlet property="textField" destination="cOe-fj-8e9" id="Gqq-GJ-Bp3"/>
+                                                                                            </connections>
+                                                                                        </tableCellView>
+                                                                                    </prototypeCellViews>
                                                                                 </tableColumn>
                                                                             </tableColumns>
                                                                             <connections>
@@ -380,14 +418,18 @@
                                                                     </subviews>
                                                                     <nil key="backgroundColor"/>
                                                                 </clipView>
-                                                                <scroller key="horizontalScroller" hidden="YES" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="YES" id="T1v-rw-y4y">
+                                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="T1v-rw-y4y">
                                                                     <rect key="frame" x="1" y="119" width="223" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" hidden="YES" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="NO" id="4QZ-ra-uHH">
+                                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="4QZ-ra-uHH">
                                                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
+                                                                <tableHeaderView key="headerView" id="NoY-ie-Qcp">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="10000" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </tableHeaderView>
                                                             </scrollView>
                                                         </subviews>
                                                     </customView>
@@ -426,7 +468,7 @@
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn width="116" minWidth="40" maxWidth="1000" id="y8q-rx-74H">
+                                                                <tableColumn identifier="artist" width="116" minWidth="40" maxWidth="1000" id="y8q-rx-74H">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="歌手">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -458,7 +500,7 @@
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
-                                                                <tableColumn width="200" minWidth="40" maxWidth="1000" id="ExT-As-96o">
+                                                                <tableColumn identifier="title" width="200" minWidth="40" maxWidth="1000" id="ExT-As-96o">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="标题">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -490,7 +532,7 @@
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
-                                                                <tableColumn width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="9Ma-GO-Qyj">
+                                                                <tableColumn identifier="track" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="9Ma-GO-Qyj">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="音轨">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -522,7 +564,7 @@
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
-                                                                <tableColumn width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="G28-6u-AIP">
+                                                                <tableColumn identifier="album" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="G28-6u-AIP">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="专辑">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -554,7 +596,7 @@
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
-                                                                <tableColumn width="149" minWidth="10" maxWidth="3.4028234663852886e+38" id="cBn-xb-BkJ">
+                                                                <tableColumn identifier="duration" width="149" minWidth="10" maxWidth="3.4028234663852886e+38" id="cBn-xb-BkJ">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="时长">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -587,6 +629,10 @@
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
+                                                            <connections>
+                                                                <outlet property="dataSource" destination="0Lh-rQ-IbX" id="O3k-Xe-QfX"/>
+                                                                <outlet property="delegate" destination="0Lh-rQ-IbX" id="BEl-GI-MDK"/>
+                                                            </connections>
                                                         </tableView>
                                                     </subviews>
                                                     <nil key="backgroundColor"/>
@@ -612,10 +658,18 @@
                                     <real value="250"/>
                                 </holdingPriorities>
                             </splitView>
+                            <searchField wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3pa-aa-ouS">
+                                <rect key="frame" x="658" y="498" width="160" height="22"/>
+                                <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="ZNz-BP-ybf">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </searchFieldCell>
+                            </searchField>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="Wil-cx-Zgg" id="k3Y-1v-COC"/>
+                        <outlet property="playlistTableView" destination="i0l-63-Kpq" id="je6-RI-Wy3"/>
                         <outlet property="tagTableView" destination="Wil-cx-Zgg" id="WKc-NQ-ruR"/>
                     </connections>
                 </viewController>

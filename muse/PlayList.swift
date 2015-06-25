@@ -18,7 +18,7 @@ class PlayList : NSObject {
     }
     
     var nowplaying: Music!
-    var playinglist: [Music]!
+    var playinglist: [Music] = []
     
     private override init() {
         
@@ -26,6 +26,10 @@ class PlayList : NSObject {
     
     func setNowPlaying(path: NSURL) {
         self.nowplaying = Music(path: path)
+    }
+    
+    func addMusic(music: Music) {
+        playinglist.append(music)
     }
 
 }

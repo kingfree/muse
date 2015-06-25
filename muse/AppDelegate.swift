@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func openFileDialog(sender: NSMenuItem) {
-        
+
     }
 }
 
