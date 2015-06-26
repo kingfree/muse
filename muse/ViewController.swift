@@ -15,6 +15,19 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var playlistTableView: NSTableView!
     
+    var nowplaying: Music! {
+        get {
+            return PlayList.sharedInstance.nowplaying
+        }
+    }
+    
+    var playlist: [Music] {
+        get {
+            return PlayList.sharedInstance.playinglist
+        }
+    }
+    @IBOutlet var playlistController: NSArrayController!
+    
     override func viewWillAppear() {
         
     }
@@ -45,10 +58,9 @@ class ViewController: NSViewController {
         
         if openDialog.runModal() == NSFileHandlingPanelOKButton {
             var path = openDialog.URL
-            println(path)
-            
             let pl = PlayList.sharedInstance
             pl.setNowPlaying(path!)
+            pl.addMusic(pl.nowplaying)
             tagTableView.reloadData()
             playlistTableView.reloadData()
         }
@@ -57,24 +69,21 @@ class ViewController: NSViewController {
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int
     {
-        let pl = PlayList.sharedInstance
         if tableView == tagTableView {
-            if let music = pl.nowplaying {
+            if let music = nowplaying {
                 return music.metadataArray.count
             }
         } else if tableView == playlistTableView {
-            return pl.playinglist.count
+            return playlist.count
         }
         return 0
     }
     
     func tableView(tableView: NSTableView!, viewForTableColumn tableColumn: NSTableColumn!, row: Int) -> NSView! {
-        println(tableView)
         let cell = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as! NSTableCellView
         let textField = cell.textField
-        let pl = PlayList.sharedInstance
         if tableView == tagTableView {
-            if let music = pl.nowplaying {
+            if let music = nowplaying {
                 let item: (key: String, value: String) = music.metadataArray[row]
                 if let col: String = tableColumn!.identifier {
                     if col == "key" {
@@ -85,10 +94,8 @@ class ViewController: NSViewController {
                 }
             }
         } else if tableView == playlistTableView {
-            println(pl.playinglist.count)
-            println(row)
-            if pl.playinglist.count >= row {
-                let music = pl.playinglist[row]
+            if playlist.count >= row {
+                let music = playlist[row]
                 if let col: String = tableColumn!.identifier {
                     switch col {
                     case "title":
@@ -100,9 +107,8 @@ class ViewController: NSViewController {
                     case "track":
                         textField?.stringValue = music.track
                     case "duration":
-                        let durationText = NSString(format: "%i:%02i",
-                            music.duration.value / 60,
-                            music.duration.value % 60)
+                        let duration = Int(round(CMTimeGetSeconds(music.duration)))
+                        let durationText = NSString(format: "%i:%02i", duration / 60, duration % 60)
                         textField?.stringValue = durationText as String
                     default:
                         break

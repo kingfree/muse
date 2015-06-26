@@ -26,9 +26,9 @@ class Music: NSObject {
     
     func setProps() {
         title = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyTitle, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
-//        artist = getprop("标题").stringValue
-//        album = getprop("标题").stringValue
-//        track = getprop("标题").stringValue
+        artist = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyArtist, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
+        album = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyAlbumName, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
+        track = metadataMap["音轨"]!
     }
     
     var metadata: [AVMetadataItem] {
@@ -44,6 +44,20 @@ class Music: NSObject {
                 let key = transforidentifier(item.identifier)
                 if let value = item.stringValue {
                     meta.append((key: key, value: value))
+                }
+            }
+            return meta
+        }
+    }
+    
+    
+    var metadataMap: [String : String] {
+        get {
+            var meta: [String : String] = [:]
+            for item in metadata {
+                let key = transforidentifier(item.identifier)
+                if let value = item.stringValue {
+                    meta.updateValue(value, forKey: key)
                 }
             }
             return meta

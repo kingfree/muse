@@ -669,11 +669,13 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="playlistController" destination="IWq-hL-Yxn" id="GBx-x1-Vdq"/>
                         <outlet property="playlistTableView" destination="i0l-63-Kpq" id="je6-RI-Wy3"/>
                         <outlet property="tagTableView" destination="Wil-cx-Zgg" id="WKc-NQ-ruR"/>
                     </connections>
                 </viewController>
                 <customObject id="B91-Oc-XQe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <arrayController id="IWq-hL-Yxn"/>
             </objects>
             <point key="canvasLocation" x="700" y="350"/>
         </scene>
