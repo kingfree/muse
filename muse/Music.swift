@@ -24,6 +24,13 @@ class Music: NSObject {
         }
     }
     
+    func match(str: String) -> Bool{
+        if title =~ str || artist =~ str || album =~ str || track =~ str{
+            return true
+        }
+        return false
+    }
+    
     init(path: NSURL) {
         audio = AVURLAsset(URL: path, options: nil)
         duration = audio.duration
@@ -98,7 +105,7 @@ class Music: NSObject {
         }
         return transname
     }
-
+    
     /*
     http://id3.org/id3v2.4.0-frames
     

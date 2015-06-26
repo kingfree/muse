@@ -31,5 +31,19 @@ class PlayList : NSObject {
     func addMusic(music: Music) {
         playinglist.append(music)
     }
-
+    
+    func searchMusic(keyword: String) -> [Music] {
+        if keyword.isEmpty {
+            return playinglist
+        }
+        var result: [Music] = []
+        let match = ".*".join(keyword.componentsSeparatedByString(" ").map { String($0) } )
+        for music in playinglist {
+            if music.match(match) {
+                result.append(music)
+            }
+        }
+        return result
+    }
+    
 }

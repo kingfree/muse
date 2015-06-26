@@ -29,9 +29,12 @@ class ViewController: NSViewController {
         }
     }
     
-    
+    var musiclist: [Music]?
     var playlist: [Music] {
         get {
+            if musiclist != nil {
+                return self.musiclist!
+            }
             return PlayList.sharedInstance.playinglist
         }
         set {
@@ -80,6 +83,15 @@ class ViewController: NSViewController {
             }
         }
     }
+    
+    @IBOutlet weak var searchField: NSSearchField!
+    
+    @IBAction func searchMusicIn(sender: AnyObject) {
+        let str = sender.stringValue
+        musiclist = PlayList.sharedInstance.searchMusic(str)
+        playlistTableView.reloadData()
+    }
+    
     
     @IBAction func selectMusic(sender: AnyObject) {
         for i in playlistTableView.selectedRowIndexes {
