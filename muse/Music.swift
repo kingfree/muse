@@ -25,10 +25,19 @@ class Music: NSObject {
     }
     
     func setProps() {
-        title = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyTitle, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
-        artist = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyArtist, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
-        album = AVMetadataItem.metadataItemsFromArray(metadata, withKey: AVMetadataCommonKeyAlbumName, keySpace:AVMetadataKeySpaceCommon)![0].stringValue
-        track = metadataMap["音轨"]!
+        let map = metadataMap
+        if let str = map["标题"] {
+            title = str
+        }
+        if let str = map["歌手"] {
+            artist = str
+        }
+        if let str = map["专辑"] {
+            album = str
+        }
+        if let str = map["音轨"] {
+            track = str
+        }
     }
     
     var metadata: [AVMetadataItem] {
@@ -66,6 +75,7 @@ class Music: NSObject {
     
     let id3frames: [String: String] = [
         "id3/TPE1": "歌手",
+        "id3/TPE2": "歌手",
         "id3/TIT2": "标题",
         "id3/TALB": "专辑",
         "id3/COMM": "注释",

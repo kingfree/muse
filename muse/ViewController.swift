@@ -45,26 +45,30 @@ class ViewController: NSViewController {
     
     @IBAction func openFile(sender: AnyObject) {
         
-        var openDialog: NSOpenPanel = NSOpenPanel()
+        var panel: NSOpenPanel = NSOpenPanel()
         var fileTypeArray: [String] = "mp3,ape,flac".componentsSeparatedByString(",")
         
-        openDialog.prompt = "Open"
-        openDialog.worksWhenModal = true
-        openDialog.allowsMultipleSelection = false
-        openDialog.canChooseDirectories = false
-        openDialog.resolvesAliases = true
-        openDialog.title = "打开音乐"
-        openDialog.allowedFileTypes = fileTypeArray
+        panel.prompt = "Open"
+        panel.worksWhenModal = true
+        panel.allowsMultipleSelection = true
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.resolvesAliases = true
+        panel.title = "打开音乐"
+        panel.allowedFileTypes = fileTypeArray
         
-        if openDialog.runModal() == NSFileHandlingPanelOKButton {
-            var path = openDialog.URL
-            let pl = PlayList.sharedInstance
-            pl.setNowPlaying(path!)
-            pl.addMusic(pl.nowplaying)
-            tagTableView.reloadData()
-            playlistTableView.reloadData()
+        panel.beginWithCompletionHandler { (result : Int) -> Void in
+            if result == NSFileHandlingPanelOKButton {
+                let pl = PlayList.sharedInstance
+                var files = panel.URLs as! [NSURL]
+                for file in files {
+                    pl.setNowPlaying(file)
+                    pl.addMusic(pl.nowplaying)
+                    self.tagTableView.reloadData()
+                    self.playlistTableView.reloadData()
+                }
+            }
         }
-        
     }
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int
