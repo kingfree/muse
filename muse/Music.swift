@@ -17,6 +17,13 @@ class Music: NSObject {
     var track: String = ""
     var duration: CMTime
     
+    var durationString: String {
+        get {
+            let duration = Int(round(CMTimeGetSeconds(self.duration)))
+            return NSString(format: "%i:%02i", duration / 60, duration % 60) as String
+        }
+    }
+    
     init(path: NSURL) {
         audio = AVURLAsset(URL: path, options: nil)
         duration = audio.duration

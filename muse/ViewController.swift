@@ -34,6 +34,9 @@ class ViewController: NSViewController {
         get {
             return PlayList.sharedInstance.playinglist
         }
+        set {
+            PlayList.sharedInstance.playinglist = newValue
+        }
     }
     @IBOutlet var playlistController: NSArrayController!
     
@@ -57,8 +60,6 @@ class ViewController: NSViewController {
         var panel: NSOpenPanel = NSOpenPanel()
         var fileTypeArray: [String] = "mp3,ape,flac".componentsSeparatedByString(",")
         
-        panel.prompt = "Open"
-        panel.worksWhenModal = true
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
         panel.canChooseFiles = true
@@ -81,7 +82,11 @@ class ViewController: NSViewController {
     }
     
     @IBAction func selectMusic(sender: AnyObject) {
-        nowselect = playlist[playlistTableView.selectedRow]
+        for i in playlistTableView.selectedRowIndexes {
+            if i >= 0 && i < playlist.count {
+                nowselect = playlist[i]
+            }
+        }
         self.tagTableView.reloadData()
     }
     
@@ -125,9 +130,7 @@ class ViewController: NSViewController {
                     case "track":
                         textField?.stringValue = music.track
                     case "duration":
-                        let duration = Int(round(CMTimeGetSeconds(music.duration)))
-                        let durationText = NSString(format: "%i:%02i", duration / 60, duration % 60)
-                        textField?.stringValue = durationText as String
+                        textField?.stringValue = music.durationString
                     default:
                         break
                     }
@@ -135,5 +138,60 @@ class ViewController: NSViewController {
             }
         }
         return cell
+    }
+    
+    func tableView(tableView: NSTableView!, sortDescriptorsDidChange oldDescriptors: [AnyObject]!) {
+        if tableView == playlistTableView {
+            if let marks = tableView.sortDescriptors as? [NSSortDescriptor] {
+                if let mark = marks[0].key() {
+                    let asc = marks[0].ascending
+                    switch (mark, asc) {
+                    case ("title", true):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.title < b.title
+                        });
+                    case ("title", false):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.title > b.title
+                        });
+                    case ("artist", true):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.artist < b.artist
+                        });
+                    case ("artist", false):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.artist > b.artist
+                        });
+                    case ("album", true):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.album < b.album
+                        });
+                    case ("album", false):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.album > b.album
+                        });
+                    case ("track", true):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.track < b.track
+                        });
+                    case ("track", false):
+                        playlist.sort({ (a, b) -> Bool in
+                            return a.track > b.track
+                        });
+                    case ("duration", true):
+                        playlist.sort({ (a, b) -> Bool in
+                            return CMTimeCompare(a.duration, b.duration) < 0
+                        });
+                    case ("duration", false):
+                        playlist.sort({ (a, b) -> Bool in
+                            return CMTimeCompare(a.duration, b.duration) > 0
+                        });
+                    default:
+                        break
+                    }
+                    tableView.reloadData()
+                }
+            }
+        }
     }
 }
