@@ -11,6 +11,8 @@ import AVFoundation
 
 class Music: NSObject {
     var audio: AVURLAsset
+    var url: NSURL
+    
     var title: String = ""
     var artist: String = ""
     var album: String = ""
@@ -32,6 +34,7 @@ class Music: NSObject {
     }
     
     init(path: NSURL) {
+        url = path
         audio = AVURLAsset(URL: path, options: nil)
         duration = audio.duration
         super.init()

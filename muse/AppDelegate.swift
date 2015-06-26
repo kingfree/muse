@@ -9,7 +9,6 @@
 import Cocoa
 import AVFoundation
 
-
 struct RegexHelper {
     let regex: NSRegularExpression?
     
@@ -36,12 +35,10 @@ func =~(lhs: String, rhs: String) -> Bool {
     return RegexHelper(rhs).match(lhs)
 }
 
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        
     }
     
     func applicationWillTerminate(aNotification: NSNotification) {

@@ -277,11 +277,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqy-U5-YoH">
-                                <rect key="frame" x="212" y="491" width="98" height="32"/>
-                                <buttonCell key="cell" type="push" title="播放/暂停" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Kn-2j-QLR">
+                                <rect key="frame" x="212" y="491" width="66" height="32"/>
+                                <buttonCell key="cell" type="push" title="播放" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Kn-2j-QLR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name="STHeitiSC-Light"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="playPauseMusic:" target="0Lh-rQ-IbX" id="8aH-cH-MGf"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNO-ex-jMI">
                                 <rect key="frame" x="385" y="491" width="79" height="32"/>
@@ -289,6 +292,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name="STHeitiSC-Light"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="changeNextMusic:" target="0Lh-rQ-IbX" id="AJA-Qh-mwc"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jyw-7v-WnD">
                                 <rect key="frame" x="310" y="491" width="79" height="32"/>
@@ -296,10 +302,16 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name="STHeitiSC-Light"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="changePrevMusic:" target="0Lh-rQ-IbX" id="5H1-UT-TQA"/>
+                                </connections>
                             </button>
                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UgE-8q-2GS">
                                 <rect key="frame" x="474" y="498" width="96" height="20"/>
                                 <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="acX-lr-nbP"/>
+                                <connections>
+                                    <action selector="volumeChange:" target="0Lh-rQ-IbX" id="eeh-CE-LGU"/>
+                                </connections>
                             </slider>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S2Y-US-fYJ">
                                 <rect key="frame" x="4" y="491" width="77" height="32"/>
@@ -684,10 +696,12 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="playPauseButtom" destination="rqy-U5-YoH" id="rLS-F7-uNW"/>
                         <outlet property="playlistController" destination="IWq-hL-Yxn" id="GBx-x1-Vdq"/>
                         <outlet property="playlistTableView" destination="i0l-63-Kpq" id="je6-RI-Wy3"/>
                         <outlet property="searchField" destination="3pa-aa-ouS" id="2DF-7Z-cuV"/>
                         <outlet property="tagTableView" destination="Wil-cx-Zgg" id="WKc-NQ-ruR"/>
+                        <outlet property="volumeSlider" destination="UgE-8q-2GS" id="y9e-c1-gW9"/>
                     </connections>
                 </viewController>
                 <customObject id="B91-Oc-XQe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

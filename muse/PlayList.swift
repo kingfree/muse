@@ -19,6 +19,19 @@ class PlayList : NSObject {
     
     var nowplaying: Music!
     var playinglist: [Music] = []
+    var nowindex: Int {
+        get {
+            for i in 0 ..< self.playinglist.count {
+                if self.playinglist[i] == nowplaying {
+                    return i
+                }
+            }
+            return 0
+        }
+        set {
+            self.nowplaying = self.playinglist[newValue % self.playinglist.count]
+        }
+    }
     
     private override init() {
         
@@ -44,6 +57,14 @@ class PlayList : NSObject {
             }
         }
         return result
+    }
+    
+    func getPrevMusic() -> Music {
+        return playinglist[(nowindex - 1) % playinglist.count]
+    }
+    
+    func getNextMusic() -> Music {
+        return playinglist[(nowindex + 1) % playinglist.count]
     }
     
 }

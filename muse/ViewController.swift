@@ -9,7 +9,7 @@
 import Cocoa
 import AVFoundation
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, AVAudioPlayerDelegate {
     
     @IBOutlet weak var tagTableView: NSTableView!
     
@@ -20,9 +20,8 @@ class ViewController: NSViewController {
         get {
             if onemusic == nil {
                 return PlayList.sharedInstance.nowplaying
-            } else {
-                return onemusic
             }
+            return onemusic
         }
         set {
             onemusic = newValue
@@ -38,9 +37,10 @@ class ViewController: NSViewController {
             return PlayList.sharedInstance.playinglist
         }
         set {
-            PlayList.sharedInstance.playinglist = newValue
+            musiclist = newValue
         }
     }
+    
     @IBOutlet var playlistController: NSArrayController!
     
     override func viewWillAppear() {
@@ -81,6 +81,72 @@ class ViewController: NSViewController {
                     self.playlistTableView.reloadData()
                 }
             }
+        }
+    }
+    
+    var musicPlayer: AVAudioPlayer!
+    
+    @IBOutlet weak var playPauseButtom: NSButton!
+    
+    @IBAction func playPauseMusic(sender: AnyObject) {
+        let pl = PlayList.sharedInstance
+        println(playPauseButtom.title)
+        if musicPlayer != nil {
+            if musicPlayer.rate == 0.0 {
+                playPauseButtom.title = "暂停"
+                musicPlayer.play()
+            } else {
+                println(musicPlayer.currentTime)
+                playPauseButtom.title = "播放"
+                musicPlayer.pause()
+            }
+        } else if let music = pl.nowplaying {
+            setPlayingMusic(music)
+            println(music.title)
+            musicPlayer.play()
+            playPauseButtom.title = "暂停"
+        } else if let music = nowselect {
+            setPlayingMusic(music)
+            println(music.title)
+            musicPlayer.play()
+            playPauseButtom.title = "暂停"
+        }
+    }
+    
+    @IBAction func changePrevMusic(sender: AnyObject) {
+        let rate = musicPlayer.rate
+        setPlayingMusic(PlayList.sharedInstance.getPrevMusic())
+        musicPlayer.rate = rate
+    }
+    
+    @IBAction func changeNextMusic(sender: AnyObject) {
+        let rate = musicPlayer.rate
+        setPlayingMusic(PlayList.sharedInstance.getNextMusic())
+        musicPlayer.rate = rate
+    }
+    
+    func setPlayingMusic(music: Music) {
+        let pl = PlayList.sharedInstance
+        pl.nowplaying = music
+        self.nowselect = music
+        musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: nil)
+        musicPlayer.delegate = self
+        musicPlayer.prepareToPlay()
+        println(music.title)
+    }
+    
+    func audioPlayerDidFinishPlaying(sender player: AVAudioPlayer!,
+        successfully flag: Bool) {
+            if player == musicPlayer {
+                setPlayingMusic(PlayList.sharedInstance.getNextMusic())
+            }
+    }
+    
+    @IBOutlet weak var volumeSlider: NSSlider!
+    
+    @IBAction func volumeChange(sender: AnyObject) {
+        if let player = musicPlayer {
+            player.volume = Float(volumeSlider.doubleValue / volumeSlider.maxValue)
         }
     }
     
