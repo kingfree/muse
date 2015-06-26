@@ -630,6 +630,7 @@
                                                                 </tableColumn>
                                                             </tableColumns>
                                                             <connections>
+                                                                <action selector="selectMusic:" target="0Lh-rQ-IbX" id="YGe-f7-Wqg"/>
                                                                 <outlet property="dataSource" destination="0Lh-rQ-IbX" id="O3k-Xe-QfX"/>
                                                                 <outlet property="delegate" destination="0Lh-rQ-IbX" id="BEl-GI-MDK"/>
                                                             </connections>

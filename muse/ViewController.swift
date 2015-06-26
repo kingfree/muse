@@ -15,11 +15,20 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var playlistTableView: NSTableView!
     
-    var nowplaying: Music! {
+    var onemusic: Music?
+    var nowselect: Music! {
         get {
-            return PlayList.sharedInstance.nowplaying
+            if onemusic == nil {
+                return PlayList.sharedInstance.nowplaying
+            } else {
+                return onemusic
+            }
+        }
+        set {
+            onemusic = newValue
         }
     }
+    
     
     var playlist: [Music] {
         get {
@@ -71,10 +80,15 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func selectMusic(sender: AnyObject) {
+        nowselect = playlist[playlistTableView.selectedRow]
+        self.tagTableView.reloadData()
+    }
+    
     func numberOfRowsInTableView(tableView: NSTableView) -> Int
     {
         if tableView == tagTableView {
-            if let music = nowplaying {
+            if let music = nowselect {
                 return music.metadataArray.count
             }
         } else if tableView == playlistTableView {
@@ -87,7 +101,7 @@ class ViewController: NSViewController {
         let cell = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as! NSTableCellView
         let textField = cell.textField
         if tableView == tagTableView {
-            if let music = nowplaying {
+            if let music = nowselect {
                 let item: (key: String, value: String) = music.metadataArray[row]
                 if let col: String = tableColumn!.identifier {
                     if col == "key" {
