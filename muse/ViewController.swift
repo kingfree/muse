@@ -147,7 +147,12 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
     
     func setPlayingMusic(music: Music) {
         nowplaying = music
-        musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: nil)
+        var error: NSError?
+        musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: &error)
+        if error != nil {
+            println(error)
+            return
+        }
         musicPlayer.delegate = self
         setVolumeFromSlider()
         musicPlayer.prepareToPlay()
@@ -160,8 +165,7 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
         }
     }
     
-    func audioPlayerDidFinishPlaying(sender player: AVAudioPlayer!, successfully flag: Bool) {
-        println("播放完一曲")
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
         if player == musicPlayer {
             setPlayingMusic(PlayList.sharedInstance.getNextMusic())
             doPlayMusic()
