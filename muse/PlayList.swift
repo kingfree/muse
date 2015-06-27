@@ -18,19 +18,25 @@ class PlayList : NSObject {
     }
     
     var nowplaying: Music!
+    var nowselected: Music!
     var playinglist: [Music] = []
+    var playlist: [Music] = []
     var nowindex: Int {
         get {
-            for i in 0 ..< self.playinglist.count {
-                if self.playinglist[i] == nowplaying {
-                    return i
-                }
-            }
-            return 0
+            return getIndex(nowplaying)
         }
         set {
             self.nowplaying = self.playinglist[newValue % self.playinglist.count]
         }
+    }
+    
+    func getIndex(music: Music) -> Int {
+        for i in 0 ..< self.playinglist.count {
+            if self.playinglist[i] == nowplaying {
+                return i
+            }
+        }
+        return -1
     }
     
     private override init() {
@@ -39,24 +45,27 @@ class PlayList : NSObject {
     
     func setNowPlaying(path: NSURL) {
         self.nowplaying = Music(path: path)
+        self.nowselected = self.nowplaying
     }
     
     func addMusic(music: Music) {
+        playlist.append(music)
         playinglist.append(music)
     }
     
     func searchMusic(keyword: String) -> [Music] {
         if keyword.isEmpty {
-            return playinglist
+            playinglist = playlist
+            return playlist
         }
-        var result: [Music] = []
+        playinglist = []
         let match = ".*".join(keyword.componentsSeparatedByString(" ").map { String($0) } )
-        for music in playinglist {
+        for music in playlist {
             if music.match(match) {
-                result.append(music)
+                playinglist.append(music)
             }
         }
-        return result
+        return playinglist
     }
     
     func getPrevMusic() -> Music {

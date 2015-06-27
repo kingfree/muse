@@ -15,29 +15,39 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
     
     @IBOutlet weak var playlistTableView: NSTableView!
     
-    var onemusic: Music?
-    var nowselect: Music! {
+    var nowselected: Music! {
         get {
-            if onemusic == nil {
-                return PlayList.sharedInstance.nowplaying
-            }
-            return onemusic
+            return PlayList.sharedInstance.nowselected
         }
         set {
-            onemusic = newValue
+            PlayList.sharedInstance.nowselected = newValue
         }
     }
     
-    var musiclist: [Music]?
-    var playlist: [Music] {
+    var nowplaying: Music! {
         get {
-            if musiclist != nil {
-                return self.musiclist!
-            }
+            return PlayList.sharedInstance.nowplaying
+        }
+        set {
+            PlayList.sharedInstance.nowplaying = newValue
+        }
+    }
+    
+    var playinglist: [Music] {
+        get {
             return PlayList.sharedInstance.playinglist
         }
         set {
-            musiclist = newValue
+            PlayList.sharedInstance.playinglist = newValue
+        }
+    }
+    
+    var playlist: [Music] {
+        get {
+            return PlayList.sharedInstance.playlist
+        }
+        set {
+            PlayList.sharedInstance.playlist = newValue
         }
     }
     
@@ -49,7 +59,8 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        playlistTableView.target = self
+        playlistTableView.doubleAction = "doubleClickItem:"
     }
     
     override var representedObject: AnyObject? {
@@ -80,6 +91,7 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
                     self.tagTableView.reloadData()
                     self.playlistTableView.reloadData()
                 }
+                self.nowselected = self.playinglist[0]
             }
         }
     }
@@ -90,92 +102,115 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
     
     @IBAction func playPauseMusic(sender: AnyObject) {
         let pl = PlayList.sharedInstance
-        println(playPauseButtom.title)
         if musicPlayer != nil {
-            if musicPlayer.rate == 0.0 {
-                playPauseButtom.title = "暂停"
-                musicPlayer.play()
+            if musicPlayer.playing {
+                doPlayMusic()
             } else {
-                println(musicPlayer.currentTime)
-                playPauseButtom.title = "播放"
-                musicPlayer.pause()
+                doPauseMusic()
             }
         } else if let music = pl.nowplaying {
             setPlayingMusic(music)
-            println(music.title)
-            musicPlayer.play()
-            playPauseButtom.title = "暂停"
-        } else if let music = nowselect {
+            doPlayMusic()
+        } else if let music = nowplaying {
             setPlayingMusic(music)
-            println(music.title)
-            musicPlayer.play()
-            playPauseButtom.title = "暂停"
+            doPlayMusic()
         }
     }
     
+    func doPlayMusic() {
+        playPauseButtom.title = "暂停"
+        musicPlayer.play()
+        print("正在播放： ")
+        println(nowplaying.title)
+    }
+    
+    func doPauseMusic() {
+        playPauseButtom.title = "播放"
+        musicPlayer.pause()
+    }
+    
     @IBAction func changePrevMusic(sender: AnyObject) {
-        let rate = musicPlayer.rate
+        let isPlay = musicPlayer.playing
         setPlayingMusic(PlayList.sharedInstance.getPrevMusic())
-        musicPlayer.rate = rate
+        if isPlay {
+            doPlayMusic()
+        }
     }
     
     @IBAction func changeNextMusic(sender: AnyObject) {
-        let rate = musicPlayer.rate
+        let isPlay = musicPlayer.playing
         setPlayingMusic(PlayList.sharedInstance.getNextMusic())
-        musicPlayer.rate = rate
+        if isPlay {
+            doPlayMusic()
+        }
     }
     
     func setPlayingMusic(music: Music) {
-        let pl = PlayList.sharedInstance
-        pl.nowplaying = music
-        self.nowselect = music
+        nowplaying = music
         musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: nil)
         musicPlayer.delegate = self
+        setVolumeFromSlider()
         musicPlayer.prepareToPlay()
         println(music.title)
     }
     
-    func audioPlayerDidFinishPlaying(sender player: AVAudioPlayer!,
-        successfully flag: Bool) {
-            if player == musicPlayer {
-                setPlayingMusic(PlayList.sharedInstance.getNextMusic())
-            }
+    func setVolumeFromSlider() {
+        if let player = musicPlayer {
+            player.volume = Float(volumeSlider.doubleValue / volumeSlider.maxValue)
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(sender player: AVAudioPlayer!, successfully flag: Bool) {
+        println("播放完一曲")
+        if player == musicPlayer {
+            setPlayingMusic(PlayList.sharedInstance.getNextMusic())
+            doPlayMusic()
+        }
     }
     
     @IBOutlet weak var volumeSlider: NSSlider!
     
     @IBAction func volumeChange(sender: AnyObject) {
-        if let player = musicPlayer {
-            player.volume = Float(volumeSlider.doubleValue / volumeSlider.maxValue)
-        }
+        setVolumeFromSlider()
     }
     
     @IBOutlet weak var searchField: NSSearchField!
     
     @IBAction func searchMusicIn(sender: AnyObject) {
         let str = sender.stringValue
-        musiclist = PlayList.sharedInstance.searchMusic(str)
+        PlayList.sharedInstance.searchMusic(str)
         playlistTableView.reloadData()
     }
     
-    
     @IBAction func selectMusic(sender: AnyObject) {
-        for i in playlistTableView.selectedRowIndexes {
-            if i >= 0 && i < playlist.count {
-                nowselect = playlist[i]
-            }
+        let i = playlistTableView.clickedRow
+        if i >= 0 && i < playinglist.count {
+            nowselected = playinglist[i]
         }
+        if musicPlayer == nil {
+            setPlayingMusic(nowselected)
+        }
+        self.tagTableView.reloadData()
+    }
+    
+    func doubleClickItem(sender: AnyObject) {
+        let i = playlistTableView.clickedRow
+        if i >= 0 && i < playinglist.count {
+            nowselected = playinglist[i]
+        }
+        setPlayingMusic(nowselected)
+        doPlayMusic()
         self.tagTableView.reloadData()
     }
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int
     {
         if tableView == tagTableView {
-            if let music = nowselect {
-                return music.metadataArray.count
+            if nowselected != nil {
+                return nowselected.metadataArray.count
             }
         } else if tableView == playlistTableView {
-            return playlist.count
+            return playinglist.count
         }
         return 0
     }
@@ -184,7 +219,8 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
         let cell = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as! NSTableCellView
         let textField = cell.textField
         if tableView == tagTableView {
-            if let music = nowselect {
+            let music = nowselected
+            if music.metadataArray.count > row {
                 let item: (key: String, value: String) = music.metadataArray[row]
                 if let col: String = tableColumn!.identifier {
                     if col == "key" {
@@ -195,8 +231,8 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
                 }
             }
         } else if tableView == playlistTableView {
-            if playlist.count >= row {
-                let music = playlist[row]
+            if playinglist.count > row {
+                let music = playinglist[row]
                 if let col: String = tableColumn!.identifier {
                     switch col {
                     case "title":
@@ -225,43 +261,43 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
                     let asc = marks[0].ascending
                     switch (mark, asc) {
                     case ("title", true):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.title < b.title
                         });
                     case ("title", false):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.title > b.title
                         });
                     case ("artist", true):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.artist < b.artist
                         });
                     case ("artist", false):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.artist > b.artist
                         });
                     case ("album", true):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.album < b.album
                         });
                     case ("album", false):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.album > b.album
                         });
                     case ("track", true):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.track < b.track
                         });
                     case ("track", false):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return a.track > b.track
                         });
                     case ("duration", true):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return CMTimeCompare(a.duration, b.duration) < 0
                         });
                     case ("duration", false):
-                        playlist.sort({ (a, b) -> Bool in
+                        playinglist.sort({ (a, b) -> Bool in
                             return CMTimeCompare(a.duration, b.duration) > 0
                         });
                     default:
