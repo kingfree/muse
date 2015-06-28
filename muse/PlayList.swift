@@ -30,7 +30,7 @@ class PlayList : NSObject {
             self.nowplaying = self.playinglist[newValue % self.playinglist.count]
         }
     }
-    var playstate: Int = 0
+    var playstate: Int = 3
     
     func getIndex(music: Music!) -> Int {
         if music == nil {
@@ -80,7 +80,11 @@ class PlayList : NSObject {
     func getPrevMusic() -> Music! {
         var music: Music!
         do {
-            music = playedlist.removeLast()
+            if playedlist.count > 0 {
+                music = playedlist.removeLast()
+            } else {
+                break
+            }
         } while music == playedlist.last
         if let music = playedlist.last {
             return music
@@ -116,6 +120,26 @@ class PlayList : NSObject {
             music = playinglist[(nowindex + 1) % playinglist.count]
         }
         return music
+    }
+    
+    func removeMusic(indexes: NSIndexSet) -> Bool {
+        var s = 0
+        var t = 0
+        var removelist : [Music] = []
+        for i in indexes {
+            removelist.append(playinglist[i])
+        }
+        for item in removelist {
+            if let index = find(playlist, item) {
+                playlist.removeAtIndex(index)
+                s++
+            }
+            if let index = find(playinglist, item) {
+                playinglist.removeAtIndex(index)
+                t++
+            }
+        }
+        return s == t
     }
     
 }

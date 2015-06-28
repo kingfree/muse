@@ -106,18 +106,16 @@ class ViewController: NSViewController {
                     }
                     if count > 50 {
                         count = 0
-                        self.tagTableView.reloadData()
                         self.playlistTableView.reloadData()
                     }
                 }
                 if self.nowselected == nil {
                     self.nowselected = self.playinglist.first
                 }
+                self.playlistTableView.reloadData()
+                self.tagTableView.reloadData()
             }
         }
-    }
-    
-    @IBAction func addDirectory(sender: AnyObject) {
     }
     
     var musicPlayer: AVAudioPlayer!
@@ -146,11 +144,11 @@ class ViewController: NSViewController {
     }
     
     func doPlayMusic() {
-        playPauseButtom.title = "暂停"
         if musicPlayer != nil {
             musicPlayer.play()
-            print("正在播放： ")
-            println(nowplaying.title)
+            if musicPlayer.playing {
+                playPauseButtom.title = "暂停"
+            }
         }
     }
     
@@ -267,6 +265,13 @@ class ViewController: NSViewController {
         setPlayingMusic(nowselected)
         doPlayMusic()
         self.tagTableView.reloadData()
+    }
+    
+    @IBAction func deleteMusic(sender: AnyObject) {
+        if playlistTableView.selectedRowIndexes.count > 0 {
+            PlayList.sharedInstance.removeMusic(playlistTableView.selectedRowIndexes)
+            playlistTableView.reloadData()
+        }
     }
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int
