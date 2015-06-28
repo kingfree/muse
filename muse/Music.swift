@@ -119,6 +119,7 @@ let id3frames: [String: String] = [
     "id3/TCON": "流派",
     "id3/TDRC": "年代",
     "id3/TYER": "年代",
+    "id3/TDAT": "日期",
     "id3/TRCK": "音轨",
     "id3/TXXX": "其他"
 ]
@@ -132,14 +133,13 @@ func transforidentifier(tagname: String) -> String {
 }
 
 class Music: NSObject {
-    var audio: AVAsset
-    var url: NSURL
+    var url: NSURL!
     
     var title: String = ""
     var artist: String = ""
     var album: String = ""
     var track: String = ""
-    var duration: CMTime
+    var duration: CMTime!
     
     var durationString: String {
         get {
@@ -149,47 +149,54 @@ class Music: NSObject {
     }
     
     func match(str: String) -> Bool{
-        if title =~ str || artist =~ str || album =~ str || track =~ str{
+        if title =~ str || artist =~ str || album =~ str || track =~ str {
             return true
         }
         return false
     }
     
+    var metadata: [String : String] = [:]
+    
     init(path: NSURL) {
         url = path
-        audio = AVURLAsset(URL: path, options: nil)
+        let audio = AVURLAsset(URL: path, options: nil)
         duration = audio.duration
+        for item in audio.metadata as! [AVMetadataItem] {
+            if let key = item.identifier {
+                if let value = item.stringValue {
+                    metadata.updateValue(value, forKey: transforidentifier(key))
+                }
+            }
+        }
         super.init()
         setProps()
     }
     
-    func setProps() {
-        let map = metadataMap
-        if let str = map["标题"] {
-            title = str
-        }
-        if let str = map["歌手"] {
-            artist = str
-        }
-        if let str = map["专辑"] {
-            album = str
-        }
-        if let str = map["音轨"] {
-            track = str
-        }
+    init(data: NSData) {
+        super.init()
+        jsonData = data
     }
     
-    var metadata: [AVMetadataItem] {
-        get {
-            return self.audio.metadata as! [AVMetadataItem]
+    func setProps() {
+        if let str = metadata["标题"] {
+            title = str
+        }
+        if let str = metadata["歌手"] {
+            artist = str
+        }
+        if let str = metadata["专辑"] {
+            album = str
+        }
+        if let str = metadata["音轨"] {
+            track = str
         }
     }
     
     var metadataArray: [(key: String, value: String)] {
         get {
-            var map = metadataMap
+            var map = metadata
             var meta: [(key: String, value: String)] = []
-            let order: [String] = ["标题", "歌手", "专辑", "音轨", "年代", "流派", "注释"]
+            let order: [String] = ["标题", "歌手", "专辑", "音轨", "年代", "日期", "流派", "注释"]
             for one in order {
                 if let value = map[one] {
                     meta.append((key: one, value: value))
@@ -203,16 +210,19 @@ class Music: NSObject {
         }
     }
     
-    var metadataMap: [String : String] {
+    var jsonData: NSData {
         get {
-            var meta: [String : String] = [:]
-            for item in metadata {
-                let key = transforidentifier(item.identifier)
-                if let value = item.stringValue {
-                    meta.updateValue(value, forKey: key)
-                }
+            let data = ["url": url, "metadata": metadata]
+            return NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(), error: nil)!
+        }
+        set {
+            if let data = NSJSONSerialization.JSONObjectWithData(newValue, options: NSJSONReadingOptions(), error: nil) as? NSDictionary {
+                url = data["url"] as? NSURL
+                metadata = (data["metadata"] as? [String : String])!
+                setProps()
+                // 考虑：文件不存在了，但仍要在播放列表里存在
+                // 这时，需要在播放的时候延迟加载该文件
             }
-            return meta
         }
     }
 

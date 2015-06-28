@@ -143,6 +143,7 @@ class ViewController: NSViewController {
         playPauseButtom.title = "播放"
         if musicPlayer != nil {
             musicPlayer.stop()
+            musicPlayer = nil
         }
     }
     
@@ -177,6 +178,8 @@ class ViewController: NSViewController {
         musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: &error)
         if error != nil {
             println(error)
+            // 如果出错了，应该自动尝试播放下一首
+            setPlayingMusic(PlayList.sharedInstance.getNextMusic())
             return
         }
         musicPlayer.delegate = self
