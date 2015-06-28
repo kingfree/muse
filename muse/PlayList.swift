@@ -19,6 +19,7 @@ class PlayList : NSObject {
     
     var nowplaying: Music!
     var nowselected: Music!
+    var playedlist: [Music] = []
     var playinglist: [Music] = []
     var playlist: [Music] = []
     var nowindex: Int {
@@ -29,10 +30,14 @@ class PlayList : NSObject {
             self.nowplaying = self.playinglist[newValue % self.playinglist.count]
         }
     }
+    var playstate: Int = 0
     
-    func getIndex(music: Music) -> Int {
+    func getIndex(music: Music!) -> Int {
+        if music == nil {
+            return -1
+        }
         for i in 0 ..< self.playinglist.count {
-            if self.playinglist[i] == nowplaying {
+            if self.playinglist[i] == music {
                 return i
             }
         }
@@ -43,9 +48,9 @@ class PlayList : NSObject {
         
     }
     
-    func setNowPlaying(path: NSURL) {
-        self.nowplaying = Music(path: path)
-        self.nowselected = self.nowplaying
+    func setNowPlaying(music: Music) {
+        nowplaying = music
+        playedlist.append(music)
     }
     
     func addMusic(music: Music) {
@@ -68,12 +73,45 @@ class PlayList : NSObject {
         return playinglist
     }
     
-    func getPrevMusic() -> Music {
+    func getPrevMusic() -> Music! {
+        var music: Music!
+        do {
+            music = playedlist.removeLast()
+        } while music == playedlist.last
+        if let music = playedlist.last {
+            return music
+        }
+        if playinglist.count < 1 {
+            return nil
+        }
         return playinglist[(nowindex - 1) % playinglist.count]
     }
     
-    func getNextMusic() -> Music {
-        return playinglist[(nowindex + 1) % playinglist.count]
+    func getNextMusic() -> Music! {
+        var music: Music!
+        switch playstate {
+        case 0:
+            let i = nowindex + 1
+            if playinglist.count > i {
+                return playinglist[i]
+            }
+        case 1:
+            return nowplaying
+        case 2:
+            return playinglist[(nowindex + 1) % playinglist.count]
+        case 3:
+            var flag = false
+            do {
+                let i = Int(rand()) % playinglist.count
+                if playinglist.count > i && playinglist[i] != nowplaying {
+                    flag = true
+                    return playinglist[i]
+                }
+            } while !flag
+        default:
+            music = playinglist[(nowindex + 1) % playinglist.count]
+        }
+        return music
     }
     
 }

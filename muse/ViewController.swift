@@ -86,8 +86,7 @@ class ViewController: NSViewController {
                 let pl = PlayList.sharedInstance
                 var files = panel.URLs as! [NSURL]
                 for file in files {
-                    pl.setNowPlaying(file)
-                    pl.addMusic(pl.nowplaying)
+                    pl.addMusic(Music(path: file))
                     self.tagTableView.reloadData()
                     self.playlistTableView.reloadData()
                 }
@@ -120,20 +119,38 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func stopMusic(sender: AnyObject) {
+        doStopMusic()
+    }
+    
     func doPlayMusic() {
         playPauseButtom.title = "暂停"
-        musicPlayer.play()
-        print("正在播放： ")
-        println(nowplaying.title)
+        if musicPlayer != nil {
+            musicPlayer.play()
+            print("正在播放： ")
+            println(nowplaying.title)
+        }
     }
     
     func doPauseMusic() {
         playPauseButtom.title = "播放"
-        musicPlayer.pause()
+        if musicPlayer != nil {
+            musicPlayer.pause()
+        }
+    }
+    
+    func doStopMusic() {
+        playPauseButtom.title = "播放"
+        if musicPlayer != nil {
+            musicPlayer.stop()
+        }
     }
     
     @IBAction func changePrevMusic(sender: AnyObject) {
-        let isPlay = musicPlayer.playing
+        var isPlay = true
+        if musicPlayer != nil {
+            isPlay = musicPlayer.playing
+        }
         setPlayingMusic(PlayList.sharedInstance.getPrevMusic())
         if isPlay {
             doPlayMusic()
@@ -141,15 +158,21 @@ class ViewController: NSViewController {
     }
     
     @IBAction func changeNextMusic(sender: AnyObject) {
-        let isPlay = musicPlayer.playing
+        var isPlay = true
+        if musicPlayer != nil {
+            isPlay = musicPlayer.playing
+        }
         setPlayingMusic(PlayList.sharedInstance.getNextMusic())
         if isPlay {
             doPlayMusic()
         }
     }
     
-    func setPlayingMusic(music: Music) {
-        nowplaying = music
+    func setPlayingMusic(music: Music!) {
+        if music == nil {
+            return
+        }
+        PlayList.sharedInstance.setNowPlaying(music)
         var error: NSError?
         musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: &error)
         if error != nil {
@@ -193,6 +216,22 @@ class ViewController: NSViewController {
             setPlayingMusic(nowselected)
         }
         self.tagTableView.reloadData()
+    }
+    
+    @IBAction func selectOrderAsList(sender: AnyObject) {
+        PlayList.sharedInstance.playstate = 0
+    }
+    
+    @IBAction func selectOrderAsOne(sender: AnyObject) {
+        PlayList.sharedInstance.playstate = 1
+    }
+    
+    @IBAction func selectOrderAsLoop(sender: AnyObject) {
+        PlayList.sharedInstance.playstate = 2
+    }
+    
+    @IBAction func selectOrderAsRandom(sender: AnyObject) {
+        PlayList.sharedInstance.playstate = 3
     }
     
     func doubleClickItem(sender: AnyObject) {
