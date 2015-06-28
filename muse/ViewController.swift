@@ -75,7 +75,7 @@ class ViewController: NSViewController {
         var fileTypeArray: [String] = "mp3".componentsSeparatedByString(",")
         
         panel.allowsMultipleSelection = true
-        panel.canChooseDirectories = false
+        panel.canChooseDirectories = true
         panel.canChooseFiles = true
         panel.resolvesAliases = true
         panel.title = "打开音乐"
@@ -85,12 +85,34 @@ class ViewController: NSViewController {
             if result == NSFileHandlingPanelOKButton {
                 let pl = PlayList.sharedInstance
                 var files = panel.URLs as! [NSURL]
-                for file in files {
-                    pl.addMusic(Music(path: file))
-                    self.tagTableView.reloadData()
-                    self.playlistTableView.reloadData()
+                var count = 0
+                for url in files {
+                    if url.isFileReferenceURL() {
+                        count++
+                        pl.addMusic(Music(path: url))
+                    } else {
+                        let dir = NSFileManager.defaultManager().enumeratorAtURL(url, includingPropertiesForKeys: [NSURLNameKey, NSURLIsDirectoryKey], options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, errorHandler: { (url, error) -> Bool in
+                            if error != nil {
+                                return false;
+                            }
+                            return true;
+                        })
+                        while let file = dir?.nextObject() as? NSURL {
+                            if file.pathExtension == "mp3" {
+                                count++
+                                pl.addMusic(Music(path: file))
+                            }
+                        }
+                    }
+                    if count > 50 {
+                        count = 0
+                        self.tagTableView.reloadData()
+                        self.playlistTableView.reloadData()
+                    }
                 }
-                self.nowselected = self.playinglist[0]
+                if self.nowselected == nil {
+                    self.nowselected = self.playinglist.first
+                }
             }
         }
     }

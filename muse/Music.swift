@@ -157,18 +157,21 @@ class Music: NSObject {
     
     var metadata: [String : String] = [:]
     
-    init(path: NSURL) {
+    init?(path: NSURL) {
+        super.init()
         url = path
-        let audio = AVURLAsset(URL: path, options: nil)
-        duration = audio.duration
-        for item in audio.metadata as! [AVMetadataItem] {
-            if let key = item.identifier {
-                if let value = item.stringValue {
-                    metadata.updateValue(value, forKey: transforidentifier(key))
+        if let audio = AVURLAsset(URL: path, options: nil) {
+            duration = audio.duration
+            for item in audio.metadata as! [AVMetadataItem] {
+                if let key = item.identifier {
+                    if let value = item.stringValue {
+                        metadata.updateValue(value, forKey: transforidentifier(key))
+                    }
                 }
             }
+        } else {
+            return nil
         }
-        super.init()
         setProps()
     }
     

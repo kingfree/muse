@@ -48,14 +48,18 @@ class PlayList : NSObject {
         
     }
     
-    func setNowPlaying(music: Music) {
-        nowplaying = music
-        playedlist.append(music)
+    func setNowPlaying(music: Music!) {
+        if music != nil {
+            nowplaying = music
+            playedlist.append(music)
+        }
     }
     
-    func addMusic(music: Music) {
-        playlist.append(music)
-        playinglist.append(music)
+    func addMusic(music: Music!) {
+        if music != nil {
+            playlist.append(music)
+            playinglist.append(music)
+        }
     }
     
     func searchMusic(keyword: String) -> [Music] {

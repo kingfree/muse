@@ -277,7 +277,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="936" height="532"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rqy-U5-YoH">
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqy-U5-YoH">
                                 <rect key="frame" x="185" y="493" width="66" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="54" id="ASH-4V-vva"/>
@@ -291,7 +291,7 @@
                                     <action selector="playPauseMusic:" target="0Lh-rQ-IbX" id="8aH-cH-MGf"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jyw-7v-WnD">
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jyw-7v-WnD">
                                 <rect key="frame" x="313" y="493" width="79" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="67" id="qqK-ai-Jxi"/>
@@ -305,7 +305,7 @@
                                     <action selector="changePrevMusic:" target="0Lh-rQ-IbX" id="5H1-UT-TQA"/>
                                 </connections>
                             </button>
-                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UgE-8q-2GS">
+                            <slider verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UgE-8q-2GS">
                                 <rect key="frame" x="572" y="500" width="96" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="92" id="1ux-Qj-fqL"/>
@@ -317,31 +317,17 @@
                                 </connections>
                             </slider>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S2Y-US-fYJ">
-                                <rect key="frame" x="4" y="493" width="77" height="32"/>
+                                <rect key="frame" x="4" y="493" width="104" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="3Qw-dC-qkB"/>
-                                    <constraint firstAttribute="width" constant="65" id="sex-o7-mbs"/>
+                                    <constraint firstAttribute="width" constant="92" id="sex-o7-mbs"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="打开..." bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="EZv-5e-fMe">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="openFile:" target="0Lh-rQ-IbX" id="PKM-oI-I7p"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8D4-Uv-RPY">
-                                <rect key="frame" x="81" y="494" width="104" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="92" id="cMF-H5-TTh"/>
-                                    <constraint firstAttribute="height" constant="21" id="fRf-V9-YbP"/>
-                                </constraints>
-                                <buttonCell key="cell" type="push" title="添加目录..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aeU-xg-vcf">
+                                <buttonCell key="cell" type="push" title="添加音乐..." bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="EZv-5e-fMe">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name="STHeitiSC-Light"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="addDirectory:" target="0Lh-rQ-IbX" id="T7N-6d-tkh"/>
+                                    <action selector="openFile:" target="0Lh-rQ-IbX" id="PKM-oI-I7p"/>
                                 </connections>
                             </button>
                             <splitView dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nq9-Nm-gci">
@@ -365,7 +351,7 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="NoY-ie-Qcp" viewBased="YES" id="Wil-cx-Zgg">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="186" height="0.0"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="189" height="0.0"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -521,7 +507,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="ouQ-HM-PzY" viewBased="YES" id="i0l-63-Kpq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="608" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="717" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -758,7 +744,7 @@
                                     <real value="250"/>
                                 </holdingPriorities>
                             </splitView>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="016-Pm-sbt">
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="016-Pm-sbt">
                                 <rect key="frame" x="251" y="493" width="66" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="30b-xy-Sgt"/>
@@ -772,7 +758,7 @@
                                     <action selector="stopMusic:" target="0Lh-rQ-IbX" id="umd-7H-1UH"/>
                                 </connections>
                             </button>
-                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GgI-qk-lbL">
+                            <popUpButton verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GgI-qk-lbL">
                                 <rect key="frame" x="469" y="496" width="100" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="95" id="4ZV-8L-Bt6"/>
@@ -824,7 +810,7 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jNO-ex-jMI">
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNO-ex-jMI">
                                 <rect key="frame" x="390" y="493" width="79" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="UCj-Zw-2re"/>
@@ -873,16 +859,13 @@
                             <constraint firstItem="UgE-8q-2GS" firstAttribute="top" secondItem="sT2-9d-qKE" secondAttribute="top" constant="14" id="MML-Fd-MmU"/>
                             <constraint firstItem="S2Y-US-fYJ" firstAttribute="top" secondItem="sT2-9d-qKE" secondAttribute="top" constant="11" id="OHr-L5-qdA"/>
                             <constraint firstItem="nq9-Nm-gci" firstAttribute="leading" secondItem="sT2-9d-qKE" secondAttribute="leading" constant="6" id="RJl-bM-Xrg"/>
-                            <constraint firstItem="rqy-U5-YoH" firstAttribute="leading" secondItem="8D4-Uv-RPY" secondAttribute="trailing" constant="12" id="RWa-CQ-S2B"/>
                             <constraint firstItem="016-Pm-sbt" firstAttribute="leading" secondItem="rqy-U5-YoH" secondAttribute="trailing" constant="12" id="SJe-tJ-s9Z"/>
                             <constraint firstItem="rqy-U5-YoH" firstAttribute="top" secondItem="sT2-9d-qKE" secondAttribute="top" constant="11" id="V9g-05-ol0"/>
                             <constraint firstItem="GgI-qk-lbL" firstAttribute="leading" secondItem="jNO-ex-jMI" secondAttribute="trailing" constant="8" id="WsH-2u-My9"/>
-                            <constraint firstItem="8D4-Uv-RPY" firstAttribute="leading" secondItem="S2Y-US-fYJ" secondAttribute="trailing" constant="12" id="Xnm-kT-ITy"/>
                             <constraint firstItem="S2Y-US-fYJ" firstAttribute="leading" secondItem="sT2-9d-qKE" secondAttribute="leading" constant="10" id="al4-8D-fNC"/>
                             <constraint firstItem="Jyw-7v-WnD" firstAttribute="top" secondItem="sT2-9d-qKE" secondAttribute="top" constant="11" id="bdb-ol-auv"/>
                             <constraint firstItem="jNO-ex-jMI" firstAttribute="leading" secondItem="Jyw-7v-WnD" secondAttribute="trailing" constant="10" id="hnU-0C-NEW"/>
                             <constraint firstItem="nq9-Nm-gci" firstAttribute="top" secondItem="3pa-aa-ouS" secondAttribute="bottom" constant="6" id="j4e-9k-gbs"/>
-                            <constraint firstItem="8D4-Uv-RPY" firstAttribute="top" secondItem="sT2-9d-qKE" secondAttribute="top" constant="10" id="sui-XP-Ja2"/>
                         </constraints>
                     </view>
                     <connections>
