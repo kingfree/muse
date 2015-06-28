@@ -9,7 +9,7 @@
 import Cocoa
 import AVFoundation
 
-class ViewController: NSViewController, AVAudioPlayerDelegate {
+class ViewController: NSViewController {
     
     @IBOutlet weak var tagTableView: NSTableView!
     
@@ -72,7 +72,7 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
     @IBAction func openFile(sender: AnyObject) {
         
         var panel: NSOpenPanel = NSOpenPanel()
-        var fileTypeArray: [String] = "mp3,ape,flac".componentsSeparatedByString(",")
+        var fileTypeArray: [String] = "mp3".componentsSeparatedByString(",")
         
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
@@ -96,6 +96,9 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
         }
     }
     
+    @IBAction func addDirectory(sender: AnyObject) {
+    }
+    
     var musicPlayer: AVAudioPlayer!
     
     @IBOutlet weak var playPauseButtom: NSButton!
@@ -104,14 +107,14 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
         let pl = PlayList.sharedInstance
         if musicPlayer != nil {
             if musicPlayer.playing {
-                doPlayMusic()
-            } else {
                 doPauseMusic()
+            } else {
+                doPlayMusic()
             }
-        } else if let music = pl.nowplaying {
+        } else if let music = nowplaying {
             setPlayingMusic(music)
             doPlayMusic()
-        } else if let music = nowplaying {
+        } else if let music = nowselected {
             setPlayingMusic(music)
             doPlayMusic()
         }
@@ -156,19 +159,14 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
         musicPlayer.delegate = self
         setVolumeFromSlider()
         musicPlayer.prepareToPlay()
+        nowselected = music
+        tagTableView.reloadData()
         println(music.title)
     }
     
     func setVolumeFromSlider() {
         if let player = musicPlayer {
             player.volume = Float(volumeSlider.doubleValue / volumeSlider.maxValue)
-        }
-    }
-    
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
-        if player == musicPlayer {
-            setPlayingMusic(PlayList.sharedInstance.getNextMusic())
-            doPlayMusic()
         }
     }
     
@@ -307,9 +305,23 @@ class ViewController: NSViewController, AVAudioPlayerDelegate {
                     default:
                         break
                     }
+                    if searchField.stringValue.isEmpty {
+                        playlist = playinglist
+                    }
                     tableView.reloadData()
                 }
             }
         }
     }
+}
+
+extension ViewController : AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        if player == musicPlayer {
+            setPlayingMusic(PlayList.sharedInstance.getNextMusic())
+            doPlayMusic()
+        }
+    }
+    
 }
