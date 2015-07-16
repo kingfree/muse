@@ -56,7 +56,7 @@ class ViewController: NSViewController {
     override func viewWillAppear() {
         load()
         self.playlistTableView.reloadData()
-        println(playlist)
+        // println(playlist)
     }
     
     override func viewDidLoad() {
@@ -116,10 +116,10 @@ class ViewController: NSViewController {
                 }
                 self.playlistTableView.reloadData()
                 self.tagTableView.reloadData()
+                self.save()
             }
         }
         // println(NSString(data: PlayList.sharedInstance.jsonData, encoding: NSUTF8StringEncoding))
-        save()
     }
     
     let playlistPath = NSFileManager.defaultManager().URLForDirectory(.MusicDirectory, inDomain: .UserDomainMask, appropriateForURL: NSURL(string: "Music"), create: true, error: nil)?.URLByAppendingPathComponent("Muse.playlist")
@@ -224,7 +224,7 @@ class ViewController: NSViewController {
         musicPlayer.prepareToPlay()
         nowselected = music
         tagTableView.reloadData()
-        println(music.title)
+        // println(music.title)
     }
     
     func setVolumeFromSlider() {

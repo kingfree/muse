@@ -171,7 +171,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2688B4521B39251800CFC07E /* Build configuration list for PBXProject "muse" */;
+			buildConfigurationList = 2688B4521B39251800CFC07E /* Build configuration list for PBXProject "Muse" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -339,6 +339,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -352,6 +353,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -395,7 +397,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2688B4521B39251800CFC07E /* Build configuration list for PBXProject "muse" */ = {
+		2688B4521B39251800CFC07E /* Build configuration list for PBXProject "Muse" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2688B4731B39251900CFC07E /* Debug */,

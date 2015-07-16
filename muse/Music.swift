@@ -219,32 +219,17 @@ class Music: NSObject {
     
     var data: NSDictionary {
         get {
-            let data = ["url": url.path!, "metadata": metadata]
+            let data = ["url": url.path!, "metadata": metadata, "duration": CMTimeCopyAsDictionary(duration, nil)]
             return data
         }
         set {
             let data = newValue
             url = NSURL(fileURLWithPath: data["url"] as! String)
             metadata = (data["metadata"] as? [String : String])!
+            duration = CMTimeMakeFromDictionary(data["duration"] as! CFDictionary)
             setProps()
             // 考虑：文件不存在了，但仍要在播放列表里存在
             // 这时，需要在播放的时候延迟加载该文件
-        }
-    }
-    
-    var jsonData: NSData {
-        get {
-            let data = ["url": url.absoluteString!, "metadata": metadata]
-            return NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(), error: nil)!
-        }
-        set {
-            if let data = NSJSONSerialization.JSONObjectWithData(newValue, options: NSJSONReadingOptions(), error: nil) as? NSDictionary {
-                url = NSURL(fileURLWithPath: data["url"] as! String)
-                metadata = (data["metadata"] as? [String : String])!
-                setProps()
-                // 考虑：文件不存在了，但仍要在播放列表里存在
-                // 这时，需要在播放的时候延迟加载该文件
-            }
         }
     }
 
