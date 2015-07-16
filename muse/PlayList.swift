@@ -142,4 +142,26 @@ class PlayList : NSObject {
         return s == t
     }
     
+    var jsonData: NSData {
+        get {
+            var list = [NSDictionary]()
+            for music in playlist {
+                list.append(music.data)
+            }
+            let data = ["count": playlist.count, "playlist": list]
+            return NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(), error: nil)!
+        }
+        set {
+            if let data = NSJSONSerialization.JSONObjectWithData(newValue, options: NSJSONReadingOptions(), error: nil) as? NSDictionary {
+                playlist = []
+                let count = data["count"] as? Int
+                let list = (data["playlist"] as? [NSDictionary])!
+                for item in list {
+                    let music = Music(data: item)
+                    addMusic(music)
+                }
+            }
+        }
+    }
+    
 }

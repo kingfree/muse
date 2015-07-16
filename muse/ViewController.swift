@@ -54,7 +54,9 @@ class ViewController: NSViewController {
     @IBOutlet var playlistController: NSArrayController!
     
     override func viewWillAppear() {
-        
+        load()
+        self.playlistTableView.reloadData()
+        println(playlist)
     }
     
     override func viewDidLoad() {
@@ -115,6 +117,20 @@ class ViewController: NSViewController {
                 self.playlistTableView.reloadData()
                 self.tagTableView.reloadData()
             }
+        }
+        // println(NSString(data: PlayList.sharedInstance.jsonData, encoding: NSUTF8StringEncoding))
+        save()
+    }
+    
+    let playlistPath = NSFileManager.defaultManager().URLForDirectory(.MusicDirectory, inDomain: .UserDomainMask, appropriateForURL: NSURL(string: "Music"), create: true, error: nil)?.URLByAppendingPathComponent("Muse.playlist")
+    
+    func save() {
+        PlayList.sharedInstance.jsonData.writeToURL(playlistPath!, atomically: false)
+    }
+    
+    func load() {
+        if let data = NSData(contentsOfURL: playlistPath!) {
+            PlayList.sharedInstance.jsonData = data
         }
     }
     
@@ -202,6 +218,7 @@ class ViewController: NSViewController {
             setPlayingMusic(PlayList.sharedInstance.getNextMusic())
             return
         }
+//        println(NSString(data: music.jsonData, encoding: NSUTF8StringEncoding))
         musicPlayer.delegate = self
         setVolumeFromSlider()
         musicPlayer.prepareToPlay()
@@ -272,6 +289,7 @@ class ViewController: NSViewController {
             PlayList.sharedInstance.removeMusic(playlistTableView.selectedRowIndexes)
             playlistTableView.reloadData()
         }
+        save()
     }
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int
