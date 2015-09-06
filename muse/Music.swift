@@ -164,17 +164,14 @@ class Music: NSObject {
     init?(path: NSURL) {
         super.init()
         url = path
-        if let audio = AVURLAsset(URL: path, options: nil) {
-            duration = audio.duration
-            for item in audio.metadata as! [AVMetadataItem] {
-                if let key = item.identifier {
-                    if let value = item.stringValue {
-                        metadata.updateValue(value, forKey: transforidentifier(key))
-                    }
+        let audio = AVURLAsset(URL: path, options: nil)
+        duration = audio.duration
+        for item in audio.metadata {
+            if let key = item.identifier {
+                if let value = item.stringValue {
+                    metadata.updateValue(value, forKey: transforidentifier(key))
                 }
             }
-        } else {
-            return nil
         }
         setProps()
     }
@@ -219,7 +216,10 @@ class Music: NSObject {
     
     var data: NSDictionary {
         get {
-            let data = ["url": url.path!, "metadata": metadata, "duration": CMTimeCopyAsDictionary(duration, nil)]
+            var data = [:]
+            data.setValue(url.path, forKey: "url")
+            data.setValue(metadata, forKey: "metadata")
+            data.setValue(CMTimeCopyAsDictionary(duration, nil), forKey: "duration")
             return data
         }
         set {

@@ -159,6 +159,8 @@
 		2688B44F1B39251800CFC07E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Kingfree;
 				TargetAttributes = {

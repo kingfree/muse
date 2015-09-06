@@ -68,7 +68,7 @@ class PlayList : NSObject {
             return playlist
         }
         playinglist = []
-        let match = ".*".join(keyword.componentsSeparatedByString(" ").map { String($0) } )
+        let match = keyword.componentsSeparatedByString(" ").map { String($0) }.joinWithSeparator(".*" )
         for music in playlist {
             if music.match(match) {
                 playinglist.append(music)
@@ -79,7 +79,7 @@ class PlayList : NSObject {
     
     func getPrevMusic() -> Music! {
         var music: Music!
-        do {
+        repeat {
             if playedlist.count > 0 {
                 music = playedlist.removeLast()
             } else {
@@ -109,7 +109,7 @@ class PlayList : NSObject {
             return playinglist[(nowindex + 1) % playinglist.count]
         case 3:
             var flag = false
-            do {
+            repeat {
                 let i = Int(rand()) % playinglist.count
                 if playinglist.count > i && playinglist[i] != nowplaying {
                     flag = true
@@ -130,11 +130,11 @@ class PlayList : NSObject {
             removelist.append(playinglist[i])
         }
         for item in removelist {
-            if let index = find(playlist, item) {
+            if let index = playlist.indexOf(item) {
                 playlist.removeAtIndex(index)
                 s++
             }
-            if let index = find(playinglist, item) {
+            if let index = playinglist.indexOf(item) {
                 playinglist.removeAtIndex(index)
                 t++
             }
@@ -149,10 +149,10 @@ class PlayList : NSObject {
                 list.append(music.data)
             }
             let data = ["count": playlist.count, "playlist": list]
-            return NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions(), error: nil)!
+            return try! NSJSONSerialization.dataWithJSONObject(data, options: NSJSONWritingOptions())
         }
         set {
-            if let data = NSJSONSerialization.JSONObjectWithData(newValue, options: NSJSONReadingOptions(), error: nil) as? NSDictionary {
+            if let data = (try? NSJSONSerialization.JSONObjectWithData(newValue, options: NSJSONReadingOptions())) as? NSDictionary {
                 playlist = []
                 let count = data["count"] as? Int
                 let list = (data["playlist"] as? [NSDictionary])!

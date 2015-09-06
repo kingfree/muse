@@ -86,7 +86,7 @@ class ViewController: NSViewController {
         panel.beginWithCompletionHandler { (result : Int) -> Void in
             if result == NSFileHandlingPanelOKButton {
                 let pl = PlayList.sharedInstance
-                var files = panel.URLs as! [NSURL]
+                let files = panel.URLs
                 var count = 0
                 for url in files {
                     if url.isFileReferenceURL() {
@@ -94,10 +94,10 @@ class ViewController: NSViewController {
                         pl.addMusic(Music(path: url))
                     } else {
                         let dir = NSFileManager.defaultManager().enumeratorAtURL(url, includingPropertiesForKeys: [NSURLNameKey, NSURLIsDirectoryKey], options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, errorHandler: { (url, error) -> Bool in
-                            if error != nil {
-                                return false;
-                            }
-                            return true;
+//                            if erro {
+//                                return false
+//                            }
+                            return true
                         })
                         while let file = dir?.nextObject() as? NSURL {
                             if file.pathExtension == "mp3" {
@@ -122,7 +122,7 @@ class ViewController: NSViewController {
         // println(NSString(data: PlayList.sharedInstance.jsonData, encoding: NSUTF8StringEncoding))
     }
     
-    let playlistPath = NSFileManager.defaultManager().URLForDirectory(.MusicDirectory, inDomain: .UserDomainMask, appropriateForURL: NSURL(string: "Music"), create: true, error: nil)?.URLByAppendingPathComponent("Muse.playlist")
+    let playlistPath = (try? NSFileManager.defaultManager().URLForDirectory(.MusicDirectory, inDomain: .UserDomainMask, appropriateForURL: NSURL(string: "Music"), create: true))?.URLByAppendingPathComponent("Muse.playlist")
     
     func save() {
         PlayList.sharedInstance.jsonData.writeToURL(playlistPath!, atomically: false)
@@ -211,9 +211,14 @@ class ViewController: NSViewController {
         }
         PlayList.sharedInstance.setNowPlaying(music)
         var error: NSError?
-        musicPlayer = AVAudioPlayer(contentsOfURL: music.url, error: &error)
+        do {
+            musicPlayer = try AVAudioPlayer(contentsOfURL: music.url)
+        } catch let error1 as NSError {
+            error = error1
+            musicPlayer = nil
+        }
         if error != nil {
-            println(error)
+            // print(error)
             // 如果出错了，应该自动尝试播放下一首
             setPlayingMusic(PlayList.sharedInstance.getNextMusic())
             return
@@ -346,47 +351,47 @@ class ViewController: NSViewController {
     func tableView(tableView: NSTableView!, sortDescriptorsDidChange oldDescriptors: [AnyObject]!) {
         if tableView == playlistTableView {
             if let marks = tableView.sortDescriptors as? [NSSortDescriptor] {
-                if let mark = marks[0].key() {
+                if let mark = marks[0].key {
                     let asc = marks[0].ascending
                     switch (mark, asc) {
                     case ("title", true):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.title < b.title
                         });
                     case ("title", false):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.title > b.title
                         });
                     case ("artist", true):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.artist < b.artist
                         });
                     case ("artist", false):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.artist > b.artist
                         });
                     case ("album", true):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.album < b.album
                         });
                     case ("album", false):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.album > b.album
                         });
                     case ("track", true):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.track < b.track
                         });
                     case ("track", false):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return a.track > b.track
                         });
                     case ("duration", true):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return CMTimeCompare(a.duration, b.duration) < 0
                         });
                     case ("duration", false):
-                        playinglist.sort({ (a, b) -> Bool in
+                        playinglist.sortInPlace({ (a, b) -> Bool in
                             return CMTimeCompare(a.duration, b.duration) > 0
                         });
                     default:
@@ -404,7 +409,7 @@ class ViewController: NSViewController {
 
 extension ViewController : AVAudioPlayerDelegate {
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         if player == musicPlayer {
             setPlayingMusic(PlayList.sharedInstance.getNextMusic())
             doPlayMusic()

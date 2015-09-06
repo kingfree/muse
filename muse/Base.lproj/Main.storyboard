@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="h72-WD-F8a">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="h72-WD-F8a">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8187.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -346,12 +346,12 @@
                                                         <subviews>
                                                             <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIb-Eo-Vtk">
                                                                 <rect key="frame" x="0.0" y="2.5" width="191" height="230"/>
-                                                                <clipView key="contentView" misplaced="YES" drawsBackground="NO" id="ZI1-sg-lsB">
-                                                                    <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                                                <clipView key="contentView" drawsBackground="NO" id="ZI1-sg-lsB">
+                                                                    <rect key="frame" x="1" y="17" width="189" height="212"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="NoY-ie-Qcp" viewBased="YES" id="Wil-cx-Zgg">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="189" height="0.0"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="189" height="212"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -412,7 +412,7 @@
                                                                                             <rect key="frame" x="64" y="1" width="123" height="17"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
-                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOe-fj-8e9">
+                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOe-fj-8e9">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
                                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="jrd-Pg-UBP">
                                                                                                         <font key="font" metaFont="system"/>
@@ -421,12 +421,6 @@
                                                                                                     </textFieldCell>
                                                                                                 </textField>
                                                                                             </subviews>
-                                                                                            <constraints>
-                                                                                                <constraint firstItem="cOe-fj-8e9" firstAttribute="leading" secondItem="GSm-yc-TXD" secondAttribute="leading" constant="2" id="JuX-mD-Jk4"/>
-                                                                                                <constraint firstAttribute="trailing" secondItem="cOe-fj-8e9" secondAttribute="trailing" constant="2" id="Ymp-0N-pwy"/>
-                                                                                                <constraint firstAttribute="centerX" secondItem="cOe-fj-8e9" secondAttribute="centerX" constant="10" id="iqM-7b-yOV"/>
-                                                                                                <constraint firstAttribute="centerY" secondItem="cOe-fj-8e9" secondAttribute="centerY" id="rDH-U5-hmR"/>
-                                                                                            </constraints>
                                                                                             <connections>
                                                                                                 <outlet property="textField" destination="cOe-fj-8e9" id="Gqq-GJ-Bp3"/>
                                                                                             </connections>
@@ -451,7 +445,7 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                                 <tableHeaderView key="headerView" id="NoY-ie-Qcp">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="10000" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="189" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </tableHeaderView>
                                                             </scrollView>
@@ -502,12 +496,12 @@
                                         <subviews>
                                             <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccM-0I-aEM">
                                                 <rect key="frame" x="0.0" y="0.0" width="719" height="486"/>
-                                                <clipView key="contentView" misplaced="YES" drawsBackground="NO" id="TIQ-j4-cJu">
-                                                    <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                                <clipView key="contentView" drawsBackground="NO" id="TIQ-j4-cJu">
+                                                    <rect key="frame" x="1" y="17" width="717" height="468"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="ouQ-HM-PzY" viewBased="YES" id="i0l-63-Kpq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="717" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="717" height="468"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -726,7 +720,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <tableHeaderView key="headerView" id="ouQ-HM-PzY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="717" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableHeaderView>
                                             </scrollView>
@@ -879,6 +873,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aaa" destination="eIb-Eo-Vtk" id="R9d-nO-Abf"/>
                         <outlet property="playPauseButtom" destination="rqy-U5-YoH" id="rLS-F7-uNW"/>
                         <outlet property="playlistController" destination="IWq-hL-Yxn" id="GBx-x1-Vdq"/>
                         <outlet property="playlistTableView" destination="i0l-63-Kpq" id="je6-RI-Wy3"/>
